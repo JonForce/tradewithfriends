@@ -1,5 +1,6 @@
 import robin_stocks.robinhood as rh
 import math
+from tradewithfriends.settings import config
 
 def get_stocks_as_percent(holdings):
     holdings_pct = []
@@ -25,4 +26,4 @@ def get_profile_data(username):
     return get_stocks_as_percent(holdings)
 
 
-details = rh.login("EMAIL HERE", "PASSWORD HERE")
+details = rh.login(config['DEFAULT']['username'], config['DEFAULT']['password'])
