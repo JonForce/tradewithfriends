@@ -1,0 +1,50 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+
+
+<div class="container">
+  <h2>Holdings of {{username}}</h2>
+  <div>
+    <canvas id="myChart" height="100%" ></canvas>
+  </div>
+</div>
+-+-
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    colors = [];
+    pallette = [
+        "#FFADAD",
+        "#FFD6A5",
+        "#FDFFB6",
+        "#CAFFBF",
+        "#9BF6FF",
+        "#A0C4FF",
+        "#BDB2FF",
+        "#FFC6FF",
+        "#FFFFFC",
+      ];
+    var last = 0;
+    var i = 0;
+    while (i < 100) {
+        colors.push(pallette[last % pallette.length]);
+        last = last + 1;
+        i = i + 1;
+    }
+    var myChart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: [{% for item in holdings_pct %}"{{item.name}}", {% endfor %}],
+    datasets: [{
+      backgroundColor: colors,
+      data: [{% for item in holdings_pct %}{{item.equity}}, {% endfor %}],
+    }]
+  }
+});
+</script>
